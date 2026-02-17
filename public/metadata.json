@@ -1,0 +1,136 @@
+{
+  "profile": {
+    "name": "{{NAME}}",
+    "tagline": "Robotics & Embedded AI — Researcher & Inventor",
+    "email": "you@example.com",
+    "github": "https://github.com/yourname",
+    "linkedin": "https://linkedin.com/in/yourname",
+    "scholar": "https://scholar.google.com/citations?user=XXXXX",
+    "cv_pdf": "assets/cv.pdf",
+    "website": "https://yourname.dev"
+  },
+  "projects": [
+    {
+      "id": "ts3-rover",
+      "title": "TS-III Defense Rover",
+      "year": 2024,
+      "role": "Lead Developer",
+      "short_description": "Autonomous rover integrating YOLO object detection with sensor fusion for obstacle and threat detection.",
+      "problem": "Military and security patrol require autonomous threat detection in GPS-denied environments.",
+      "solution": "Built a rover platform with YOLOv7-based detection, LiDAR-camera fusion, and edge inference on Jetson Nano, achieving real-time autonomous navigation.",
+      "contributions": [
+        "Designed end-to-end perception pipeline (camera + LiDAR fusion)",
+        "Trained and deployed YOLOv7 model on Jetson Nano (12 FPS)",
+        "Implemented ROS2 navigation stack with obstacle avoidance",
+        "Led hardware integration and field testing (3 environments)"
+      ],
+      "tech_stack": ["Python", "PyTorch", "YOLOv7", "ROS2", "Jetson Nano", "LiDAR", "OpenCV"],
+      "repo": "https://github.com/yourname/ts3-rover",
+      "demo": "https://youtube.com/watch?v=XXXXX",
+      "slides": "",
+      "paper": "",
+      "architecture_diagram": "assets/architecture-diagram.png",
+      "run_command": "docker compose up --build",
+      "metrics": { "accuracy": "93%", "fps": 12, "rank": "Top 5/1000" },
+      "license": "MIT",
+      "confidential": false,
+      "summary": "Autonomous defense rover with real-time YOLO detection and sensor fusion. Achieved 93% detection accuracy at 12 FPS on edge hardware."
+    },
+    {
+      "id": "smart-agri",
+      "title": "Smart Agriculture Monitoring System",
+      "year": 2023,
+      "role": "ML Engineer",
+      "short_description": "IoT-based crop health monitoring using multispectral imaging and edge ML for early disease detection.",
+      "problem": "Crop diseases detected too late cause significant yield loss in smallholder farms.",
+      "solution": "Deployed multispectral camera drones with lightweight CNN classifiers on Raspberry Pi for early disease detection, integrated with a farmer-facing dashboard.",
+      "contributions": [
+        "Developed lightweight CNN for leaf disease classification (96% accuracy)",
+        "Built data pipeline from drone captures to Pi inference",
+        "Created REST API and simple dashboard for farmers"
+      ],
+      "tech_stack": ["Python", "TensorFlow Lite", "Raspberry Pi", "Flask", "PostgreSQL", "NDVI"],
+      "repo": "https://github.com/yourname/smart-agri",
+      "demo": "",
+      "slides": "",
+      "paper": "",
+      "architecture_diagram": "",
+      "run_command": "python main.py --config config.yaml",
+      "metrics": { "accuracy": "96%", "latency_ms": 45 },
+      "license": "Apache-2.0",
+      "confidential": false,
+      "summary": "Edge ML system for crop disease detection using multispectral imaging. 96% classification accuracy with 45ms inference on Raspberry Pi."
+    },
+    {
+      "id": "emg-prosthetic",
+      "title": "EMG-Controlled Prosthetic Hand",
+      "year": 2022,
+      "role": "Hardware & ML Lead",
+      "short_description": "Low-cost prosthetic hand controlled by EMG signals with real-time gesture classification.",
+      "problem": "Commercial prosthetic hands are prohibitively expensive for patients in low-resource settings.",
+      "solution": "Designed a 3D-printed prosthetic hand controlled via surface EMG signals, using an ADS1015 ADC and Arduino with a lightweight gesture classifier.",
+      "contributions": [
+        "Designed EMG signal acquisition circuit (ADS1015 + analog front-end)",
+        "Trained SVM gesture classifier (5 gestures, 91% accuracy)",
+        "Built 3D-printed mechanical hand with servo actuation",
+        "Conducted user study with 8 participants"
+      ],
+      "tech_stack": ["Arduino", "ADS1015", "Python", "scikit-learn", "SolidWorks", "3D Printing"],
+      "repo": "https://github.com/yourname/emg-hand",
+      "demo": "https://youtube.com/watch?v=YYYYY",
+      "slides": "assets/emg-hand-slides.pdf",
+      "paper": "",
+      "architecture_diagram": "",
+      "run_command": "arduino-cli compile --upload",
+      "metrics": { "accuracy": "91%", "gestures": 5, "cost_usd": 120 },
+      "license": "GPL-3.0",
+      "confidential": false,
+      "summary": "Low-cost EMG-controlled prosthetic hand with 91% gesture accuracy. Total BOM cost under $120."
+    }
+  ],
+  "papers": [
+    {
+      "id": "paper-yolo-defense",
+      "citation": "A. Author, B. Author. \"Real-Time Object Detection for Autonomous Defense Platforms Using YOLOv7.\" Proceedings of the International Conference on Robotics and Automation (ICRA), Springer, 2025. DOI:10.1000/xyz123",
+      "doi": "https://doi.org/10.1000/xyz123",
+      "pdf": "assets/paper-yolo-defense.pdf",
+      "abstract": "We present an optimized YOLOv7 pipeline for real-time threat detection on resource-constrained edge platforms, achieving 93% mAP at 12 FPS on Jetson Nano hardware.",
+      "contribution": [
+        "Designed the detection pipeline and training methodology",
+        "Conducted all edge-deployment experiments and benchmarking",
+        "Wrote Sections 3-5 of the manuscript"
+      ],
+      "summary": "YOLOv7 optimization for edge-based defense applications with real-time performance on Jetson Nano."
+    },
+    {
+      "id": "paper-emg-classification",
+      "citation": "C. Author, A. Author. \"Surface EMG Gesture Classification for Low-Cost Prosthetic Control.\" Journal of Biomedical Engineering, Elsevier, 2023. DOI:10.1000/abc456",
+      "doi": "https://doi.org/10.1000/abc456",
+      "pdf": "assets/paper-emg.pdf",
+      "abstract": "This work introduces a lightweight SVM-based gesture classification system for surface EMG signals, targeting affordable prosthetic hand control in resource-limited settings.",
+      "contribution": [
+        "Developed signal processing and feature extraction pipeline",
+        "Led user study design and data collection"
+      ],
+      "summary": "Lightweight EMG gesture classification for affordable prosthetic control using SVM on embedded hardware."
+    }
+  ],
+  "patents": [
+    {
+      "id": "patent-washing-machine",
+      "title": "Adaptive Washing Machine System for Non-Fabric Materials",
+      "number": "2025-XXXX",
+      "filing_date": "2025-07-15",
+      "status": "filed",
+      "abstract": "An adaptive washing system that dynamically adjusts cycle parameters based on material composition analysis, enabling safe cleaning of non-fabric items such as sports equipment, toys, and industrial components.",
+      "claims": [
+        "A sensor-driven material classification module that determines optimal wash parameters",
+        "An adaptive cycle controller that modifies water pressure, temperature, and agitation based on classified material type"
+      ],
+      "assignee": "{{NAME}} / {{INSTITUTION}}",
+      "pdf": "assets/patent-1.pdf",
+      "licensing_contact": "you@example.com",
+      "summary": "Patent for an adaptive washing machine that classifies non-fabric materials and adjusts cleaning cycles automatically."
+    }
+  ]
+}

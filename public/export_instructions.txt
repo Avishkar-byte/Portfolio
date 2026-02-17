@@ -1,0 +1,42 @@
+Export & Deploy Instructions
+============================
+
+1. EDIT PLACEHOLDERS
+   - Open metadata.json and replace all {{...}} values with your real data.
+   - Open index.md and replace all {{...}} placeholders.
+   - Add real files to assets/ (profile.jpg, cv.pdf, patent-1.pdf, etc.).
+
+2. PREVIEW LOCALLY
+   - Run: npm run dev (or bun run dev)
+   - Open http://localhost:5173 in your browser.
+
+3. EXPORT TO STATIC HTML
+   - Run: npm run build
+   - Output will be in the dist/ folder.
+   - The dist/ folder is a complete static site ready to deploy.
+
+4. CONVERT MARKDOWN TO PDF (optional)
+   - Install Pandoc: https://pandoc.org/installing.html
+   - Run: pandoc index.md -o portfolio.pdf --pdf-engine=xelatex
+   - Or for HTML: pandoc index.md -o portfolio.html --standalone
+
+5. DEPLOY OPTIONS
+   a. GitHub Pages:
+      - Push dist/ to a gh-pages branch
+      - Enable Pages in repo settings
+   b. Netlify:
+      - Connect repo, set build command: npm run build
+      - Set publish directory: dist
+   c. Vercel:
+      - Import repo, framework preset: Vite
+      - Deploy automatically on push
+
+6. PRINT TO PDF (from browser)
+   - Open the live site in Chrome
+   - Ctrl+P (or Cmd+P on Mac)
+   - Select "Save as PDF"
+   - The page is structured for clean print output
+
+7. ACCESSIBILITY CHECK
+   - Run: npx axe-cli http://localhost:5173
+   - Or use Chrome DevTools > Lighthouse > Accessibility
