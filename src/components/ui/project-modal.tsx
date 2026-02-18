@@ -14,6 +14,21 @@ interface ProjectModalProps {
 }
 
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
+    const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+
+    // Reset slide index when modal opens
+    React.useEffect(() => {
+        if (isOpen) setCurrentImageIndex(0);
+    }, [isOpen, project]);
+
+    // Auto-advance slideshow
+    React.useEffect(() => {
+        if (!isOpen || !project || project.images.length <= 1) return;
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [isOpen, project, currentImageIndex]);
     // Prevent scrolling when modal is open
     React.useEffect(() => {
         if (isOpen) {
@@ -57,27 +72,72 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                             </button>
 
                             <div className="flex flex-col md:flex-row">
-                                {/* Image Section */}
-                                <div className="w-full md:w-1/2 h-64 md:h-auto relative">
-                                    <img
-                                        src={project.images[0]}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r" />
+                                {/* Image Section - Slideshow */}
+                                <div className="w-full md:w-1/2 h-64 md:h-auto relative group">
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={currentImageIndex}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 0.5 }}
+                                            className="absolute inset-0 w-full h-full"
+                                        >
+                                            {/* Blurred Background */}
+                                            <div className="absolute inset-0 overflow-hidden">
+                                                <img
+                                                    src={project.images[currentImageIndex]}
+                                                    alt=""
+                                                    className="w-full h-full object-cover blur-xl scale-110 opacity-60"
+                                                />
+                                            </div>
+                                            {/* Foreground Image with Edge Blend */}
+                                            <img
+                                                src={project.images[currentImageIndex]}
+                                                alt={`${project.title} - Image ${currentImageIndex + 1}`}
+                                                className="absolute inset-0 w-full h-full object-contain z-10 p-2 drop-shadow-xl"
+                                                style={{
+                                                    maskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)',
+                                                    WebkitMaskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)'
+                                                }}
+                                            />
+                                        </motion.div>
+                                    </AnimatePresence>
 
-                                    {/* Badges Overlay */}
-                                    <div className="absolute bottom-4 left-4 flex flex-wrap gap-2">
-                                        {project.badges.map((badge, i) => (
-                                            <span key={i} className="px-2.5 py-1 text-xs font-medium text-white bg-black/60 backdrop-blur-md rounded-md border border-white/10">
-                                                {badge}
-                                            </span>
-                                        ))}
-                                    </div>
+                                    {/* Vignette Overlay */}
+                                    <div className="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.4)_100%)]" />
+
+                                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r pointer-events-none z-20" />
+
+                                    {/* Slide Indicators */}
+                                    {project.images.length > 1 && (
+                                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+                                            {project.images.map((_, i) => (
+                                                <button
+                                                    key={i}
+                                                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(i); }}
+                                                    className={cn(
+                                                        "w-1.5 h-1.5 rounded-full transition-all duration-300",
+                                                        i === currentImageIndex
+                                                            ? "bg-[var(--accent-primary)] w-4"
+                                                            : "bg-white/50 hover:bg-white"
+                                                    )}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Content Section */}
                                 <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col gap-6">
+                                    {/* Badges (Mobile/Desktop) */}
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.badges.map((badge, i) => (
+                                            <span key={i} className="px-2.5 py-1 text-xs font-medium text-white bg-white/5 rounded-md border border-white/10">
+                                                {badge}
+                                            </span>
+                                        ))}
+                                    </div>
                                     <div>
                                         <h2 className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-2 leading-tight">{project.title}</h2>
                                         <div className="flex items-center gap-3 text-[var(--text-secondary)] text-sm">

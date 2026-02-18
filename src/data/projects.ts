@@ -8,8 +8,12 @@ export const ALL_PROJECTS: ProjectData[] = [
         badges: ["Edge AI", "ISL Recognition", "Computer Vision", "Real-Time"],
         techStack: ["Python", "YOLOv8", "OpenCV", "cvzone", "TensorFlow Lite", "scikit-learn", "Intel RealSense", "Raspberry Pi", "MQTT"],
         images: [
-            "/projects/ts-iii-defense-rover/1.jpg",
-            "/projects/ts-iii-defense-rover/2.jpg",
+            "/projects/sparc/First.jpeg",
+            "/projects/sparc/Second.png",
+            "/projects/sparc/Third.png",
+            "/projects/sparc/Fourth.png",
+            "/projects/sparc/Fifth.png",
+            "/projects/sparc/sixth.png"
         ],
         repo: "https://github.com/Avishkar-byte/SPARC-Smart-Perception-Assistive-Reality-Companion",
         youtube: "https://youtu.be/W2UOCENfXzg",
@@ -34,7 +38,12 @@ export const ALL_PROJECTS: ProjectData[] = [
         oneLiner: "AI-powered assistive navigation system integrating real-time object detection and multi-modal feedback for visually impaired individuals.",
         badges: ["Assistive AI", "Computer Vision", "Edge AI", "Embedded Systems"],
         techStack: ["Python", "YOLOv8", "OpenCV", "PyTorch", "Raspberry Pi", "ESP32", "MPU6050", "Ultrasonic Sensor", "GPS"],
-        images: ["/projects/ecosense-iot-grid/1.jpg"], // Placeholder until user adds new images
+        images: [
+            "/projects/drishti/First.jpeg",
+            "/projects/drishti/Second.jpeg",
+            "/projects/drishti/Third.jpeg",
+            "/projects/drishti/Fourth.jpeg"
+        ],
         repo: "#",
         youtube: "",
         website: "",
@@ -53,61 +62,17 @@ export const ALL_PROJECTS: ProjectData[] = [
         ]
     },
     {
-        title: "ANAV: Autonomous GPS-Denied Drone (IROC'25)",
-        year: 2025,
-        oneLiner: "Autonomous GPS-denied quadcopter for martial environment, integrating SLAM and robust state estimation. Designed a hybrid Visual-Inertial Odometry (VIO) pipeline to enable accurate, drift-resistant pose tracking.",
-        badges: ["VIO", "Visual-Inertial SLAM", "Edge AI", "ROS", "IROC'25"],
-        techStack: ["Python", "ROS", "LibRealSense", "VINS-Fusion", "OpenCV", "Jetson Nano", "Pixhawk", "Intel RealSense D455"],
-        images: ["/assets/project-anav-thumb.webp"], // Placeholder
-        repo: "https://github.com/Avishkar-byte/HybridVIO-D455",
-        youtube: "https://youtu.be/gOIhg97PdYc",
-        website: "",
-        description: "ANAV is a lightweight, GPS-denied quadcopter designed for autonomous navigation in mars like environments as per the IROC'25 challenge. The system integrates high-rate IMU streams, stereo/RGB/depth sensing, and a robust visual-inertial odometry (VIO) pipeline to deliver centimeter-level state estimation and reliable SLAM in field conditions.",
-        keyContributions: [
-            "Lead developer of the Hybrid Visual-Inertial Odometry (VIO) pipeline: designed and implemented a hybrid driver architecture that decouples IMU and camera streams for reliable VIO on Intel RealSense D455.",
-            "Implemented hardware-time synchronization logic aligning RealSense hardware timestamps with ROS time to prevent VIO drift and improve pose stability.",
-            "Integrated high-rate IMU (LibRealSense/Python) with stereo/RGB/depth streams and VINS-Fusion for robust state estimation.",
-            "Tuned VIO parameters, performed field calibration, and validated centimeter-level tracking during real-time flight demos."
-        ],
-        technicalApproach: "The ANAV VIO uses a hybrid architecture that bypasses common D455 driver synchronization issues by reading IMU at high-rate via LibRealSense (Python) while subscribing to camera streams through ROS. Custom timestamp alignment and buffering logic ensure consistent temporal alignment between IMU and image frames, feeding VINS-Fusion for visual-inertial state estimation. The pipeline supports RGB + Depth + Stereo IR + IMU concurrently, with separate launch profiles for Hybrid (full-sensor) and Stereo-Only fallback modes.",
-        metrics: [
-            "Achieved centimeter-level state estimation in controlled demos (VINS-Fusion playback)",
-            "Real-time VIO tracking demo during IROC'25 evaluation",
-            "Result: National representation; ranked among the top ~100 teams out of ~5000 institutes"
-        ]
-    },
-    {
-        title: "Namo Rover: Nexus Astro Monitoring & Obsevation Rover",
-        year: 2024,
-        oneLiner: "Autonomous multi-terrain rover with rocker bogie mobility and robust LiDAR+IMU+wheel odometry navigation. Built for the ISRO Robotics Challenge (IROC'24). Represented Vellore Institute of Technology at the national level — Ranked Top 100/4000.",
-        badges: ["Autonomous Navigation", "LiDAR", "Sensor Fusion", "Jetson Nano", "IROC'24"],
-        techStack: ["Python", "ROS", "OpenCV", "NVIDIA Jetson Nano", "Arduino Mega", "RP LiDAR", "MPU6050", "Rhino RMCS-2303", "EKF", "SLAM"],
-        images: ["/assets/project-namo-thumb.webp"], // Placeholder
-        repo: "",
-        youtube: "https://youtu.be/MPHP1elkcBY",
-        website: "",
-        description: "ISRO Robotics Challenge (IROC'24), 2024 — Organized by Indian Space Research Organisation. National Finalist (Top 100 / 4000 Institutes) representing Vellore Institute of Technology.\n\nNamo is an autonomous, rocker-bogie multi-terrain rover designed to operate in complex outdoor environments. The platform integrates a full sensor suite (360° 2D LiDAR, IMU, wheel encoders, cameras) with a Jetson Nano-based perception and control pipeline to enable robust SLAM, obstacle avoidance, and mission-level navigation.",
-        keyContributions: [
-            "Lead — Autonomous Navigation Stack: designed and implemented the perception & navigation pipeline (2D LiDAR + IMU + wheel odometry fusion), SLAM integration, and real-time path planning on NVIDIA Jetson Nano.",
-            "Implemented sensor-fusion (EKF/Complementary filters) for odometry & IMU stabilization and created robust LiDAR pre-processing (scan segmentation, ground removal, dynamic object filtering).",
-            "Integrated ROS-based SLAM and localization (ROS + RT node architecture), tuned VIO/SLAM parameters, and validated centimeter-to-decimeter level localization under varied terrain and dynamic obstacles.",
-            "Tuned control loops and trajectory following (PID/velocity profiling) and implemented safety features (kill-switch, watchdog, redundant stop)."
-        ],
-        technicalApproach: "Mobility: Rocker-bogie chassis with Rhino encoder motors and six-wheel configuration for stability. Sensor Fusion: Merges 360° 2D LiDAR, MPU6050 IMU, and wheel odometry via EKF to establish robust pose estimation. Compute: NVIDIA Jetson Nano handles perception/SLAM/planning while Arduino Mega manages low-level actuation. Pipeline: LiDAR scan pre-filtering → Cartographer/GMapping SLAM → MoveBase path planning → Velocity command generation.",
-        metrics: [
-            "Competition: Represented VIT at national level; ranked top ~100 of ~4000 institutes (IROC'24)",
-            "System Weight: ~13 kg (assembled)",
-            "Navigation: Stable autonomous traversal with real-time obstacle negotiation",
-            "Performance: Reliable encoder-based odometry with sensor fusion reduced drift significantly"
-        ]
-    },
-    {
         title: "Polyline-Based Smart Parking System",
         year: 2024,
         oneLiner: "Adaptive parking-management system using YOLOv8 + OpenCV polyline delineation for robust occupancy detection and automated billing.",
         badges: ["YOLOv8", "Polyline PPA", "LPR", "Real-Time", "CVR 2025"],
         techStack: ["Python", "YOLOv8", "OpenCV", "Tesseract OCR", "PyTorch", "CNRPark-EXT"],
-        images: ["/assets/project-parking-thumb.webp"], // Placeholder
+        images: [
+            "/projects/polyline/First.jpeg",
+            "/projects/polyline/second.jpeg",
+            "/projects/polyline/third.jpeg",
+            "/projects/polyline/Fourth.jpeg"
+        ],
         repo: "",
         youtube: "",
         website: "https://link.springer.com/chapter/10.1007/978-3-032-14041-8_28",
@@ -127,12 +92,49 @@ export const ALL_PROJECTS: ProjectData[] = [
         ]
     },
     {
+        title: "ANAV: Autonomous GPS-Denied Drone (IROC'25)",
+        year: 2025,
+        oneLiner: "Autonomous GPS-denied quadcopter for martial environment, integrating SLAM and robust state estimation. Designed a hybrid Visual-Inertial Odometry (VIO) pipeline to enable accurate, drift-resistant pose tracking.",
+        badges: ["VIO", "Visual-Inertial SLAM", "Edge AI", "ROS", "IROC'25"],
+        techStack: ["Python", "ROS", "LibRealSense", "VINS-Fusion", "OpenCV", "Jetson Nano", "Pixhawk", "Intel RealSense D455"],
+        images: [
+            "/projects/anav/First.jpg",
+            "/projects/anav/Second.png",
+            "/projects/anav/Third.png",
+            "/projects/anav/fourth.png",
+            "/projects/anav/fifth.jpg"
+        ],
+        repo: "https://github.com/Avishkar-byte/HybridVIO-D455",
+        youtube: "https://youtu.be/gOIhg97PdYc",
+        website: "",
+        description: "ANAV is a lightweight, GPS-denied quadcopter designed for autonomous navigation in mars like environments as per the IROC'25 challenge. The system integrates high-rate IMU streams, stereo/RGB/depth sensing, and a robust visual-inertial odometry (VIO) pipeline to deliver centimeter-level state estimation and reliable SLAM in field conditions.",
+        keyContributions: [
+            "Lead developer of the Hybrid Visual-Inertial Odometry (VIO) pipeline: designed and implemented a hybrid driver architecture that decouples IMU and camera streams for reliable VIO on Intel RealSense D455.",
+            "Implemented hardware-time synchronization logic aligning RealSense hardware timestamps with ROS time to prevent VIO drift and improve pose stability.",
+            "Integrated high-rate IMU (LibRealSense/Python) with stereo/RGB/depth streams and VINS-Fusion for robust state estimation.",
+            "Tuned VIO parameters, performed field calibration, and validated centimeter-level tracking during real-time flight demos."
+        ],
+        technicalApproach: "The ANAV VIO uses a hybrid architecture that bypasses common D455 driver synchronization issues by reading IMU at high-rate via LibRealSense (Python) while subscribing to camera streams through ROS. Custom timestamp alignment and buffering logic ensure consistent temporal alignment between IMU and image frames, feeding VINS-Fusion for visual-inertial state estimation. The pipeline supports RGB + Depth + Stereo IR + IMU concurrently, with separate launch profiles for Hybrid (full-sensor) and Stereo-Only fallback modes.",
+        metrics: [
+            "Achieved centimeter-level state estimation in controlled demos (VINS-Fusion playback)",
+            "Real-time VIO tracking demo during IROC'25 evaluation",
+            "Result: National representation; ranked among the top ~100 teams out of ~5000 institutes"
+        ]
+    },
+    {
         title: "Terrain Scout: Semi-Autonomous Defense Rover",
         year: 2023,
         oneLiner: "Semi-autonomous defence rover developed in my first year, integrating obstacle avoidance, radar sensing, and real-time vision tracking using Raspberry Pi-Arduino serial communication. Presented at Pragyan 2024 (NIT Trichy), it secured First Prize at the Ingenium Hardware Hackathon.",
         badges: ["Computer Vision", "Embedded Systems", "Obstacle Avoidance", "Raspberry Pi", "Arduino"],
         techStack: ["Python", "OpenCV", "Haar Cascade", "Raspberry Pi 4", "Arduino Uno", "Ultrasonic Sensors", "Radar Module", "Servo Motors"],
-        images: ["/assets/project-ts3-thumb.webp"], // Placeholder
+        images: [
+            "/projects/terrain-scout/first.jpeg",
+            "/projects/terrain-scout/second.png",
+            "/projects/terrain-scout/third.png",
+            "/projects/terrain-scout/fourth.png",
+            "/projects/terrain-scout/fifth.png",
+            "/projects/terrain-scout/sixth.png"
+        ],
         repo: "",
         youtube: "https://youtu.be/t6z_sI_cP-s",
         website: "",
@@ -151,14 +153,49 @@ export const ALL_PROJECTS: ProjectData[] = [
             "Award-winning hardware system at national tech fest"
         ]
     },
-
+    {
+        title: "Namo Rover: Nexus Astro Monitoring & Obsevation Rover",
+        year: 2024,
+        oneLiner: "Autonomous multi-terrain rover with rocker bogie mobility and robust LiDAR+IMU+wheel odometry navigation. Built for the ISRO Robotics Challenge (IROC'24). Represented Vellore Institute of Technology at the national level — Ranked Top 100/4000.",
+        badges: ["Autonomous Navigation", "LiDAR", "Sensor Fusion", "Jetson Nano", "IROC'24"],
+        techStack: ["Python", "ROS", "OpenCV", "NVIDIA Jetson Nano", "Arduino Mega", "RP LiDAR", "MPU6050", "Rhino RMCS-2303", "EKF", "SLAM"],
+        images: [
+            "/projects/namo-rover/First.jpeg",
+            "/projects/namo-rover/second.png",
+            "/projects/namo-rover/third.png",
+            "/projects/namo-rover/fourth.png",
+            "/projects/namo-rover/fifth.png",
+            "/projects/namo-rover/sixth.png"
+        ],
+        repo: "",
+        youtube: "https://youtu.be/MPHP1elkcBY",
+        website: "",
+        description: "ISRO Robotics Challenge (IROC'24), 2024 — Organized by Indian Space Research Organisation. National Finalist (Top 100 / 4000 Institutes) representing Vellore Institute of Technology.\n\nNamo is an autonomous, rocker-bogie multi-terrain rover designed to operate in complex outdoor environments. The platform integrates a full sensor suite (360° 2D LiDAR, IMU, wheel encoders, cameras) with a Jetson Nano-based perception and control pipeline to enable robust SLAM, obstacle avoidance, and mission-level navigation.",
+        keyContributions: [
+            "Lead — Autonomous Navigation Stack: designed and implemented the perception & navigation pipeline (2D LiDAR + IMU + wheel odometry fusion), SLAM integration, and real-time path planning on NVIDIA Jetson Nano.",
+            "Implemented sensor-fusion (EKF/Complementary filters) for odometry & IMU stabilization and created robust LiDAR pre-processing (scan segmentation, ground removal, dynamic object filtering).",
+            "Integrated ROS-based SLAM and localization (ROS + RT node architecture), tuned VIO/SLAM parameters, and validated centimeter-to-decimeter level localization under varied terrain and dynamic obstacles.",
+            "Tuned control loops and trajectory following (PID/velocity profiling) and implemented safety features (kill-switch, watchdog, redundant stop)."
+        ],
+        technicalApproach: "Mobility: Rocker-bogie chassis with Rhino encoder motors and six-wheel configuration for stability. Sensor Fusion: Merges 360° 2D LiDAR, MPU6050 IMU, and wheel odometry via EKF to establish robust pose estimation. Compute: NVIDIA Jetson Nano handles perception/SLAM/planning while Arduino Mega manages low-level actuation. Pipeline: LiDAR scan pre-filtering → Cartographer/GMapping SLAM → MoveBase path planning → Velocity command generation.",
+        metrics: [
+            "Competition: Represented VIT at national level; ranked top ~100 of ~4000 institutes (IROC'24)",
+            "System Weight: ~13 kg (assembled)",
+            "Navigation: Stable autonomous traversal with real-time obstacle negotiation",
+            "Performance: Reliable encoder-based odometry with sensor fusion reduced drift significantly"
+        ]
+    },
     {
         title: "Shree Anna (PWA): Digital Millet Marketplace",
         year: 2025,
         oneLiner: "Progressive Web Application digitizing the millet value chain with end-to-end traceability, marketplace integration, and rural-first architecture.",
         badges: ["PWA", "Traceability", "AgriTech", "UPI Integration", "Data Analytics"],
         techStack: ["React", "TypeScript", "Vite", "Tailwind CSS", "PWA", "QR Traceability", "UPI Integration"],
-        images: ["/assets/project-shreeanna-thumb.webp"], // Placeholder
+        images: [
+            "/projects/shree-anna/first.jpeg",
+            "/projects/shree-anna/second.jpeg",
+            "/projects/shree-anna/third.png"
+        ],
         repo: "",
         youtube: "https://youtu.be/-ws0F1UwPRo",
         website: "https://shree-ann-sih-teal.vercel.app/",

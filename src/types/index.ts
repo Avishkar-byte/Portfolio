@@ -35,6 +35,9 @@ export interface ExperienceData {
     role: string;
     company: string;
     description: string;
+    achievements?: string[];
+    skills?: string[];
+    image?: string;
     iconType: "Rocket" | "Award" | "Globe" | "Cpu" | "Star" | "TrendingUp" | "Zap" | "Search" | "Target" | "Briefcase";
 }
 

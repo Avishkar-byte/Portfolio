@@ -6,10 +6,18 @@ import JourneySection from "../components/portfolio/JourneySection";
 
 
 
+import { useEffect } from "react";
 import { WavePath } from "@/components/ui/wave-path";
 import { Footer } from "@/components/ui/footer-section";
 
 const Index = () => {
+  // Force scroll to top on page load/refresh
+  useEffect(() => {
+    if (history.scrollRestoration) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <PortfolioNav />

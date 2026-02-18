@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { ProjectData } from "@/components/ui/project-card";
+import { ProjectData } from "@/types";
 import { Button } from "@/components/ui/button";
 import { ProjectModal } from "@/components/ui/project-modal";
 import { Badge } from "@/components/ui/badge";

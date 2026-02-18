@@ -47,10 +47,16 @@ export function Footer() {
                         <div className="mb-10 md:mb-0">
                             <h3 className="text-sm font-semibold text-[var(--text-primary)] tracking-wider uppercase mb-4">Portfolio</h3>
                             <ul className="text-[var(--text-secondary)] space-y-3 text-sm">
-                                {["Home", "Projects", "Experience", "Publications"].map((item) => (
-                                    <li key={item}>
-                                        <a href={`#${item.toLowerCase()}`} className="hover:text-[var(--accent-primary)] transition-colors duration-300 block py-1">
-                                            {item}
+                                {[
+                                    { name: "Home", href: "#home" },
+                                    { name: "Projects", href: "#projects" },
+                                    { name: "Papers & Patents", href: "#papers-patents" },
+                                    { name: "Experience & Achievements", href: "#experience" },
+                                    { name: "Contact", href: "#contact" },
+                                ].map((item) => (
+                                    <li key={item.name}>
+                                        <a href={item.href} className="hover:text-[var(--accent-primary)] transition-colors duration-300 block py-1">
+                                            {item.name}
                                         </a>
                                     </li>
                                 ))}
@@ -64,7 +70,12 @@ export function Footer() {
                             <h3 className="text-sm font-semibold text-[var(--text-primary)] tracking-wider uppercase mb-4">Contact</h3>
                             <ul className="text-[var(--text-secondary)] space-y-4 text-sm">
                                 <li>
-                                    <a href={`mailto:${CONTACT.email}`} className="group flex items-center gap-3 hover:text-[var(--accent-primary)] transition-colors duration-300">
+                                    <a
+                                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group flex items-center gap-3 hover:text-[var(--accent-primary)] transition-colors duration-300"
+                                    >
                                         <Mail className="size-4 group-hover:text-[var(--accent-primary)] text-[var(--accent-secondary)]" />
                                         <span className="truncate max-w-[180px]">{CONTACT.email}</span>
                                     </a>

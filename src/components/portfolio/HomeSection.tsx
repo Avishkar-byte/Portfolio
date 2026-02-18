@@ -50,13 +50,13 @@ export default function HomeSection() {
             </motion.div>
 
             <div className="space-y-3">
-              <motion.h1 variants={fadeIn} className="text-4xl md:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
+              <motion.h1 variants={fadeIn} className="text-3xl md:text-6xl font-bold text-[var(--text-primary)] tracking-tight">
                 {PROFILE.name}
               </motion.h1>
 
-              <motion.ul variants={staggerContainer} className="flex flex-wrap gap-4 text-xs font-extralight tracking-tight text-[var(--text-secondary)] pt-1">
+              <motion.ul variants={staggerContainer} className="flex flex-wrap gap-3 text-xs font-extralight tracking-tight text-[var(--text-secondary)] pt-1">
                 {PROFILE.roles.map((role, i) => (
-                  <motion.li key={i} variants={fadeIn} className="flex items-center gap-2">
+                  <motion.li key={i} variants={fadeIn} className="flex items-center gap-1.5">
                     <span className="h-1 w-1 rounded-full bg-[var(--accent-secondary)]" /> {role}
                   </motion.li>
                 ))}
@@ -87,7 +87,7 @@ export default function HomeSection() {
               </StarButton>
 
               <StarButton
-                href="https://github.com/yourname"
+                href={PROFILE.githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
@@ -102,7 +102,7 @@ export default function HomeSection() {
               </StarButton>
 
               <StarButton
-                href="https://linkedin.com/in/yourname"
+                href={PROFILE.linkedinLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
@@ -116,20 +116,7 @@ export default function HomeSection() {
                 </div>
               </StarButton>
 
-              <StarButton
-                href="https://scholar.google.com/citations?user=XXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
-              >
-                <div className="flex items-center justify-center w-full h-full">
-                  <GraduationCap size={20} className="shrink-0 text-[var(--accent-primary)]" />
-                  <span className="max-w-0 group-hover:max-w-[100px] overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pl-0 group-hover:pl-2 text-[var(--text-primary)]">
-                    Scholar
-                  </span>
-                </div>
-              </StarButton>
+
             </motion.div>
 
             {/* Skills Marquee Section */}
@@ -139,11 +126,13 @@ export default function HomeSection() {
           </motion.div>
 
           {/* Right content - 3D Scene */}
-          <div className="flex-1 w-full h-[500px] md:h-[700px] relative -mr-10 md:-mr-20 lg:-mr-30 -mt-32 md:-mt-48">
+          <div className="flex-1 w-full h-[500px] md:h-[700px] relative -mr-10 md:-mr-20 lg:-mr-30 -mt-32 md:-mt-48 overflow-hidden">
             <SplineScene
-              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              scene="https://prod.spline.design/F6uOMiexEZ51tNm5/scene.splinecode"
               className="w-full h-full scale-90 md:scale-100 origin-center"
             />
+            {/* Watermark Mask Strip - Adjust 'h-8' to change height */}
+            <div className="absolute bottom-0 left-0 w-full h-14 bg-black z-20 pointer-events-none" />
           </div>
         </div>
       </div>

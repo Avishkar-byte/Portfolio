@@ -143,9 +143,9 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                 className="w-full md:w-80 md:h-full shrink-0 bg-black/40 backdrop-blur-md border-b md:border-b-0 border-r border-[var(--glass-border)] flex flex-col z-20"
                 aria-hidden="false"
             >
-                <div className="p-6 border-b border-[var(--glass-border)] flex items-end justify-between">
+                <div className="p-4 md:p-6 border-b border-[var(--glass-border)] flex items-end justify-between">
                     <div>
-                        <h2 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] mb-1">Projects</h2>
+                        <h2 className="text-xl md:text-2xl font-bold tracking-tight text-[var(--text-primary)] mb-1">Projects</h2>
                         <div className="text-sm font-mono text-[var(--text-secondary)] mt-2 flex items-center gap-1 opacity-70">
                             <span className="text-[var(--accent-primary)] font-bold text-lg">{String(activeIndex + 1).padStart(2, '0')}</span>
                             <span className="text-xs text-white/20">/</span>
@@ -171,7 +171,7 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                                 key={index}
                                 onClick={() => setActiveIndex(index)}
                                 className={cn(
-                                    "group relative flex items-center gap-4 p-3 rounded-xl transition-all duration-300 w-64 md:w-full text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]",
+                                    "group relative flex items-center gap-3 p-2 md:p-3 rounded-xl transition-all duration-300 w-60 md:w-full text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)] shrink-0",
                                     activeIndex === index
                                         ? "active nav-item text-[var(--accent-primary)] bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-[0_6px_18px_var(--accent-glow)]"
                                         : "nav-item text-[var(--accent-secondary)] hover:bg-[var(--glass-bg)] border border-transparent hover:border-[var(--glass-border)] opacity-60 hover:opacity-100"
@@ -216,7 +216,7 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                     <div
                         key={index}
                         className={cn(
-                            "project-slide absolute inset-0 w-full h-full p-6 md:p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                            "project-slide absolute inset-0 w-full h-full p-4 md:p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
                             activeIndex === index
                                 ? "active opacity-100 translate-y-0 z-10 pointer-events-auto"
                                 : "opacity-0 translate-y-10 z-0 pointer-events-none"
@@ -234,16 +234,36 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                                 onClick={() => setSelectedProject(project)}
                             >
                                 <AnimatePresence mode="wait">
-                                    <motion.img
+                                    <motion.div
                                         key={currentImageIndex}
-                                        src={project.images[currentImageIndex]}
-                                        alt={project.title}
-                                        initial={{ opacity: 0, scale: 1.05 }}
-                                        animate={{ opacity: 1, scale: 1 }}
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.8, ease: "easeOut" }}
-                                        className="absolute inset-0 w-full h-full object-cover"
-                                    />
+                                        transition={{ duration: 0.8 }}
+                                        className="absolute inset-0 w-full h-full"
+                                    >
+                                        {/* Blurred Background */}
+                                        <div className="absolute inset-0 overflow-hidden">
+                                            <img
+                                                src={project.images[currentImageIndex]}
+                                                alt=""
+                                                className="w-full h-full object-cover blur-2xl scale-110 opacity-60"
+                                            />
+                                        </div>
+                                        {/* Foreground Image with Edge Blend */}
+                                        <img
+                                            src={project.images[currentImageIndex]}
+                                            alt={project.title}
+                                            className="absolute inset-0 w-full h-full object-contain z-10 p-2 drop-shadow-2xl"
+                                            style={{
+                                                maskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)',
+                                                WebkitMaskImage: 'radial-gradient(ellipse at center, black 70%, transparent 100%)'
+                                            }}
+                                        />
+
+                                        {/* Vignette Overlay to further blend edges */}
+                                        <div className="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.4)_100%)]" />
+                                    </motion.div>
                                 </AnimatePresence>
 
                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />

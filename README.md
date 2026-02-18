@@ -1,73 +1,63 @@
-# Welcome to your Lovable project
+# Portfolio | Avishkar-byte
 
-## Project info
+A high-performance, immersive 3D portfolio website built with modern web technologies. This project showcases my journey, projects, research papers, and technical skills through a cinematic and interactive user experience.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![Portfolio Preview](public/preview.png)
 
-## How can I edit this code?
+## 🚀 Key Features
 
-There are several ways of editing your application.
+- **Cinematic Experience**: Immersive, scroll-locked project showcase with dynamic slideshows and "glassmorphism" UI.
+- **Interactive 3D Elements**: Integrated Spline 3D scenes and particle effects for a modern visual appeal.
+- **Data-Driven Architecture**: Fully dynamic content powered by centralized data files (`src/data`), making updates effortless.
+- **Mobile Optimized**: Fully responsive layout ensuring a seamless experience across all devices, from desktops to smartphones.
+- **Performance First**: Optimized assets, lazy loading, and a clean codebase ensuring high Lighthouse scores.
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- **Framework**: [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/) + Custom "Glass" System
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **3D Graphics**: [Spline](https://spline.design/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 📂 Project Structure
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/
+│   ├── portfolio/    # Core sections (Home, Projects, Experience, etc.)
+│   └── ui/           # Reusable UI primitives (Buttons, Modals, Effects)
+├── data/             # Centralized content (projects.ts, experience.ts, etc.)
+├── types/            # TypeScript definitions
+└── App.tsx           # Main application entry
 ```
 
-**Edit a file directly in GitHub**
+## 🏃‍♂️ Running Locally
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/Avishkar-byte/Portfolio.git
+    cd Portfolio
+    ```
 
-**Use GitHub Codespaces**
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+3.  **Start the development server**
+    ```bash
+    npm run dev
+    ```
 
-## What technologies are used for this project?
+## 📬 Contact
 
-This project is built with:
+Feel free to reach out for collaborations or just a chat!
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **GitHub**: [Avishkar-byte](https://github.com/Avishkar-byte)
+- **Email**: [avishkar.work@gmail.com](mailto:avishkar.work@gmail.com)
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+*Designed & Developed by Avishkar.*

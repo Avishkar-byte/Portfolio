@@ -6,8 +6,8 @@ export default function PortfolioNav() {
   const navItems = [
     { name: "Home", url: "#home", icon: Home },
     { name: "Projects", url: "#projects", icon: Briefcase },
-    { name: "Papers", url: "#papers-patents", icon: FileText },
-    { name: "Experience", url: "#experience", icon: Map },
+    { name: "Papers & Patents", url: "#papers-patents", icon: FileText },
+    { name: "Experience & Achievements", url: "#experience", icon: Map },
     { name: "Contact", url: "#contact", icon: Mail },
   ];
 
