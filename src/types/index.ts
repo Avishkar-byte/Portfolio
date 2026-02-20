@@ -47,7 +47,7 @@ export interface ProfileData {
     subtitle: string;
     roles: string[];
     summary: string;
-    stats: string;
+    stats: string[];
     resumeLink: string;
     githubLink: string;
     linkedinLink?: string;

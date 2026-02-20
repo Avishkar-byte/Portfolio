@@ -135,7 +135,7 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
         <section
             id="projects"
             ref={sectionRef}
-            className="relative w-full h-screen overflow-hidden bg-transparent flex flex-col md:flex-row snap-start"
+            className="relative w-full h-screen bg-transparent flex flex-col md:flex-row snap-start"
         >
             {/* Pinned Navigation */}
             <div
@@ -143,7 +143,8 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                 className="w-full md:w-80 md:h-full shrink-0 bg-black/40 backdrop-blur-md border-b md:border-b-0 border-r border-[var(--glass-border)] flex flex-col z-20"
                 aria-hidden="false"
             >
-                <div className="p-4 md:p-6 border-b border-[var(--glass-border)] flex items-end justify-between">
+                {/* Header: hidden on mobile to save space */}
+                <div className="hidden md:flex p-4 md:p-6 border-b border-[var(--glass-border)] items-end justify-between">
                     <div>
                         <h2 className="text-xl md:text-2xl font-bold tracking-tight text-[var(--text-primary)] mb-1">Projects</h2>
                         <div className="text-sm font-mono text-[var(--text-secondary)] mt-2 flex items-center gap-1 opacity-70">
@@ -210,13 +211,13 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                 </div>
             </div>
 
-            {/* Stacked Project Stage */}
-            <div className="projects-stage flex-1 h-full relative overflow-hidden">
+            {/* Stacked Project Stage — flex-1 takes remaining height below nav */}
+            <div className="projects-stage flex-1 min-h-0 relative overflow-hidden">
                 {projects.map((project, index) => (
                     <div
                         key={index}
                         className={cn(
-                            "project-slide absolute inset-0 w-full h-full p-4 md:p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                            "project-slide absolute inset-0 w-full h-full px-4 pt-6 pb-4 md:p-12 lg:p-20 flex flex-col justify-start md:justify-center overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
                             activeIndex === index
                                 ? "active opacity-100 translate-y-0 z-10 pointer-events-auto"
                                 : "opacity-0 translate-y-10 z-0 pointer-events-none"
@@ -226,11 +227,11 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                         {/* Background Gradient */}
                         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80 pointer-events-none" />
 
-                        <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                        <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-16 items-center pt-2 md:pt-0">
 
                             {/* Visual Side (Slideshow) */}
                             <div
-                                className="order-2 lg:order-1 relative aspect-video md:aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--glass-border)] shadow-2xl group cursor-pointer bg-black/50"
+                                className="order-2 lg:order-1 relative aspect-[16/7] md:aspect-[4/3] rounded-2xl overflow-hidden border border-[var(--glass-border)] shadow-2xl group cursor-pointer bg-black/50"
                                 onClick={() => setSelectedProject(project)}
                             >
                                 <AnimatePresence mode="wait">
@@ -292,18 +293,18 @@ export const CinematicProjects = ({ projects }: CinematicProjectsProps) => {
                             </div>
 
                             {/* Content Side */}
-                            <div className="order-1 lg:order-2 space-y-6">
+                            <div className="order-1 lg:order-2 space-y-3 md:space-y-6">
                                 <div>
                                     <Badge variant="outline" className="border-[var(--accent-primary)]/30 text-[var(--accent-primary)] bg-[var(--accent-primary)]/5">
                                         {project.year}
                                     </Badge>
                                 </div>
 
-                                <h3 className="project-title text-2xl md:text-4xl font-bold text-[var(--text-primary)] leading-tight">
+                                <h3 className="project-title text-xl md:text-4xl font-bold text-[var(--text-primary)] leading-tight">
                                     {project.title}
                                 </h3>
 
-                                <p className="text-lg text-[var(--text-secondary)] leading-relaxed max-w-md">
+                                <p className="text-sm md:text-lg text-[var(--text-secondary)] leading-relaxed max-w-md">
                                     {project.oneLiner}
                                 </p>
 

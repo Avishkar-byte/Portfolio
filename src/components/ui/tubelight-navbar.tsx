@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import Link from "next/link" // Note: This might need changing to specific router logic if not using Next.js
 import { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -34,7 +33,7 @@ export function NavBar({ items, className }: NavBarProps) {
     return (
         <div
             className={cn(
-                "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+                "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 pb-6 sm:pb-0 sm:pt-6 overflow-visible",
                 className,
             )}
         >
