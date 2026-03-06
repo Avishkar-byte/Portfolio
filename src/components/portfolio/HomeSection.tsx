@@ -49,12 +49,12 @@ export default function HomeSection() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]/80 backdrop-blur-2xl overflow-hidden"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]/80 backdrop-blur-md md:backdrop-blur-2xl overflow-hidden"
           >
             {/* Ambient Background Orbs */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[var(--accent-primary)]/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '4s' }} />
-              <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50 md:opacity-100">
+              <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[var(--accent-primary)]/20 rounded-full blur-3xl md:blur-[100px] animate-pulse" style={{ animationDuration: '4s' }} />
+              <div className="absolute bottom-1/4 right-1/4 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-blue-600/10 rounded-full blur-3xl md:blur-[120px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
             </div>
 
             {/* Apple-style Multilingual Greeting */}
@@ -93,7 +93,7 @@ export default function HomeSection() {
 
           {/* 1. Full-screen Robot Hero */}
           <div className="w-full h-screen relative overflow-hidden flex items-center justify-center">
-            <Spotlight className="-top-40 left-0 opacity-50" fill="var(--accent-primary)" />
+            {/* Spotlight removed on mobile to prevent severe WebGL+SVG filter lag on Android */}
             <SplineScene
               scene="https://prod.spline.design/F6uOMiexEZ51tNm5/scene.splinecode"
               className="w-full h-full scale-90 origin-center"
