@@ -22,7 +22,7 @@ export function NavBar({ items, className }: NavBarProps) {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 768)
+            setIsMobile(window.innerWidth < 1024)
         }
 
         handleResize()
@@ -53,8 +53,8 @@ export function NavBar({ items, className }: NavBarProps) {
                                 isActive && "bg-muted text-primary",
                             )}
                         >
-                            <span className="hidden md:inline whitespace-nowrap">{item.name}</span>
-                            <span className="md:hidden">
+                            <span className="hidden lg:inline whitespace-nowrap">{item.name}</span>
+                            <span className="lg:hidden">
                                 <Icon size={18} strokeWidth={2.5} />
                             </span>
                             {isActive && (
