@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { animate } from "motion/react";
 
@@ -32,6 +32,13 @@ const GlowingEffect = memo(
         const containerRef = useRef<HTMLDivElement>(null);
         const lastPosition = useRef({ x: 0, y: 0 });
         const animationFrameRef = useRef<number>(0);
+
+        const [isTouch, setIsTouch] = useState(false);
+        useEffect(() => {
+            setIsTouch(window.matchMedia('(hover: none)').matches);
+        }, []);
+
+        const effectivelyDisabled = isTouch || disabled;
 
         const handleMove = useCallback(
             (e?: MouseEvent | { x: number; y: number }) => {
@@ -98,7 +105,7 @@ const GlowingEffect = memo(
         );
 
         useEffect(() => {
-            if (disabled) return;
+            if (effectivelyDisabled) return;
 
             const handleScroll = () => handleMove();
             const handlePointerMove = (e: PointerEvent) => handleMove(e);
@@ -115,7 +122,7 @@ const GlowingEffect = memo(
                 window.removeEventListener("scroll", handleScroll);
                 document.body.removeEventListener("pointermove", handlePointerMove);
             };
-        }, [handleMove, disabled]);
+        }, [handleMove, effectivelyDisabled]);
 
         return (
             <>
@@ -124,8 +131,13 @@ const GlowingEffect = memo(
                         "pointer-events-none absolute -inset-px hidden rounded-[inherit] border opacity-0 transition-opacity",
                         glow && "opacity-100",
                         variant === "white" && "border-white",
-                        disabled && "!block"
+                        effectivelyDisabled && "!block"
                     )}
+                    style={
+                        isTouch && !disabled
+                            ? { boxShadow: "0 0 20px rgba(99,102,241,0.08)", opacity: 1 }
+                            : undefined
+                    }
                 />
                 <div
                     ref={containerRef}
@@ -163,7 +175,7 @@ const GlowingEffect = memo(
                         glow && "opacity-100",
                         blur > 0 && "blur-[var(--blur)] ",
                         className,
-                        disabled && "!hidden"
+                        effectivelyDisabled && "!hidden"
                     )}
                 >
                     <div

@@ -1,17 +1,20 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // ===================== LIGHTWEIGHT BACKGROUND =====================
-// A standard HTML5 Canvas implementation of a "Neural Network" (Particles connecting)
-// This is much more stable than heavy Three.js shaders on some hardware.
+// Mobile: Pure CSS animated gradient (no canvas, no JS animation)
+// Desktop: HTML5 Canvas "Neural Network" particles with perf caps
 
 export function ShaderBackground({ className }: { className?: string }) {
+    const isMobile = useIsMobile();
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
+        if (isMobile) return; // No canvas on mobile
+
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -20,6 +23,7 @@ export function ShaderBackground({ className }: { className?: string }) {
 
         let particles: Particle[] = [];
         let animationFrameId: number;
+        let lastFrame = 0;
 
         const resizeCanvas = () => {
             canvas.width = window.innerWidth;
@@ -62,7 +66,7 @@ export function ShaderBackground({ className }: { className?: string }) {
 
         const initParticles = () => {
             particles = [];
-            const particleCount = Math.min(window.innerWidth / 10, 100); // Responsive count
+            const particleCount = Math.min(window.innerWidth / 15, 60); // Capped for perf
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle());
             }
@@ -70,6 +74,15 @@ export function ShaderBackground({ className }: { className?: string }) {
 
         const animate = () => {
             if (!ctx) return;
+
+            // 30fps frame limiter
+            const now = Date.now();
+            if (now - lastFrame < 33) {
+                animationFrameId = requestAnimationFrame(animate);
+                return;
+            }
+            lastFrame = now;
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Update and draw particles
@@ -83,9 +96,9 @@ export function ShaderBackground({ className }: { className?: string }) {
                     const dy = particles[j].y - particle.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 150) {
+                    if (distance < 120) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(200, 200, 200, ${0.1 - distance / 1500})`; // Fading greyish lines
+                        ctx.strokeStyle = `rgba(200, 200, 200, ${0.1 - distance / 1200})`; // Fading greyish lines
                         ctx.lineWidth = 1;
                         ctx.moveTo(particle.x, particle.y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -105,8 +118,21 @@ export function ShaderBackground({ className }: { className?: string }) {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameId);
         };
-    }, []);
+    }, [isMobile]);
 
+    // Mobile: CSS animated gradient background (no canvas, no JS animation)
+    if (isMobile) {
+        return (
+            <div className={cn("fixed inset-0 -z-50 w-full h-full", className)} aria-hidden>
+                <div className="mobile-gradient-bg fixed inset-0 -z-50" />
+                {/* Vignette / Gradient Overlay for Depth */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/80" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-black/80" />
+            </div>
+        );
+    }
+
+    // Desktop: Canvas particle network
     return (
         <div className={cn("bg-black fixed inset-0 -z-50 w-full h-full", className)} aria-hidden>
             <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />

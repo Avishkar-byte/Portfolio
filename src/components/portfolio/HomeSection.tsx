@@ -8,10 +8,12 @@ import SkillsMarquee from "@/components/ui/skills-marquee";
 import { Download, Github, Linkedin } from "lucide-react";
 
 import { PROFILE } from "@/data/profile";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function HomeSection() {
   const containerRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isMobile = useIsMobile();
 
   // Multilingual Hello logic
   const greetings = ["hello", "नमस्ते", "hola", "bonjour", "こんにちは"];
@@ -24,6 +26,14 @@ export default function HomeSection() {
     }, 800); // cycle every 800ms
     return () => clearInterval(interval);
   }, [isLoaded]);
+
+  // On mobile, mark loaded immediately (no Spline to wait for)
+  useEffect(() => {
+    if (isMobile && !isLoaded) {
+      const timer = setTimeout(() => setIsLoaded(true), 2400);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile, isLoaded]);
 
   // Animation variants
   const fadeIn = {
@@ -49,7 +59,7 @@ export default function HomeSection() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]/80 backdrop-blur-md md:backdrop-blur-2xl overflow-hidden"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]/80 backdrop-blur-md md:backdrop-blur-2xl overflow-hidden min-h-[100dvh]"
           >
             {/* Ambient Background Orbs */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-50 md:opacity-100">
@@ -86,51 +96,24 @@ export default function HomeSection() {
         )}
       </AnimatePresence>
 
-      <section id="home" className="w-full min-h-screen flex flex-col overflow-hidden relative bg-transparent" aria-label="Home" tabIndex={-1} ref={containerRef}>
+      <section id="home" className="w-full min-h-[100dvh] flex flex-col overflow-hidden relative bg-transparent" aria-label="Home" tabIndex={-1} ref={containerRef}>
 
-        {/* ── MOBILE LAYOUT: Robot (hero) first, then text ── */}
+        {/* ── MOBILE LAYOUT: Glowing orb hero first, then text ── */}
         <div className="flex flex-col md:hidden w-full">
 
-          {/* 1. Full-screen Robot Hero */}
-          <div className="w-full h-screen relative overflow-hidden flex items-center justify-center">
-            {/* Spotlight removed on mobile to prevent severe WebGL+SVG filter lag on Android */}
-            <SplineScene
-              scene="https://prod.spline.design/F6uOMiexEZ51tNm5/scene.splinecode"
-              className="w-full h-full scale-90 origin-center"
-              onLoad={() => setIsLoaded(true)}
-            />
-            {/* Watermark Mask Strip */}
-            {/* Watermark mask — taller on mobile to fully cover Spline badge */}
-            <div className="absolute bottom-0 left-0 w-full h-24 md:h-14 bg-black z-20 pointer-events-none" />
-
-            {/* Premium Scroll Button */}
-            <a
-              href="#home-intro"
-              className="absolute bottom-28 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-3 group cursor-pointer select-none"
-            >
-              {/* Pill button */}
-              <div className="flex flex-col items-center gap-1.5 px-5 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md shadow-[0_0_30px_rgba(139,92,246,0.15)] group-hover:border-white/20 group-hover:bg-white/10 group-hover:shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-500">
-                <span className="text-[10px] uppercase tracking-[0.2em] font-light text-white/60 group-hover:text-white/90 transition-colors duration-300">Scroll</span>
-                {/* Animated chevrons */}
-                <div className="flex flex-col items-center -space-y-1.5">
-                  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" className="text-[var(--accent-primary)] opacity-40 group-hover:opacity-100 transition-opacity duration-300 delay-0">
-                    <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" className="text-[var(--accent-primary)] opacity-70 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-                    <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" className="text-[var(--accent-primary)] opacity-100 group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                    <path d="M1 1l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </div>
-            </a>
+          {/* 1. CSS-only Glowing Orb Placeholder (replaces SplineScene) */}
+          <div className="w-full h-[60vh] relative flex items-center justify-center">
+            <div className="relative w-64 h-64">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--accent-primary)]/30 to-transparent blur-3xl animate-pulse" />
+              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[var(--accent-primary)]/20 to-[var(--accent-secondary)]/10 blur-2xl" style={{animationDuration: '3s'}} />
+              <div className="absolute inset-16 rounded-full bg-[var(--accent-primary)]/10 blur-xl animate-pulse" style={{animationDuration: '5s'}} />
+            </div>
           </div>
 
           {/* 2. Text / Details Section */}
           <motion.div
             id="home-intro"
-            className="w-full px-6 py-12 space-y-6 z-10"
+            className="w-full px-4 sm:px-6 py-12 space-y-6 z-10"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
@@ -144,7 +127,7 @@ export default function HomeSection() {
             </motion.div>
 
             <div className="space-y-3">
-              <motion.h1 variants={fadeIn} className="text-4xl font-bold text-[var(--text-primary)] tracking-tight">
+              <motion.h1 variants={fadeIn} className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">
                 {PROFILE.name}
               </motion.h1>
 
@@ -160,12 +143,12 @@ export default function HomeSection() {
                 {PROFILE.summary}
               </motion.p>
 
-              {/* Stats Badges */}
-              <motion.div variants={fadeIn} className="grid grid-cols-3 gap-2 pt-1">
+              {/* Stats Badges — 2 columns on mobile */}
+              <motion.div variants={fadeIn} className="grid grid-cols-2 gap-2 pt-1">
                 {PROFILE.stats.map((stat, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 backdrop-blur-md text-[var(--text-secondary)] shadow-[0_0_12px_rgba(139,92,246,0.08)] hover:bg-white/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 backdrop-blur-md text-[var(--text-secondary)] shadow-[0_0_12px_rgba(139,92,246,0.08)] transition-all duration-300"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] opacity-80 shrink-0" />
                     {stat}
@@ -174,20 +157,18 @@ export default function HomeSection() {
               </motion.div>
             </div>
 
-            {/* Links */}
-            <motion.div variants={fadeIn} className="pt-2 flex flex-wrap gap-4">
+            {/* Links — stacked full-width on mobile */}
+            <motion.div variants={fadeIn} className="pt-2 flex flex-col w-full gap-3">
               <StarButton
                 href={PROFILE.resumeLink}
                 target="_blank"
                 download
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-full h-12 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full h-full gap-2">
                   <Download size={20} className="shrink-0 text-[var(--accent-primary)]" />
-                  <span className="max-w-0 group-hover:max-w-[100px] overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pl-0 group-hover:pl-2 text-[var(--text-primary)]">
-                    Resume
-                  </span>
+                  <span className="text-[var(--text-primary)]">Resume</span>
                 </div>
               </StarButton>
 
@@ -196,13 +177,11 @@ export default function HomeSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-full h-12 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full h-full gap-2">
                   <Github size={20} className="shrink-0 text-[var(--accent-primary)]" />
-                  <span className="max-w-0 group-hover:max-w-[100px] overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pl-0 group-hover:pl-2 text-[var(--text-primary)]">
-                    GitHub
-                  </span>
+                  <span className="text-[var(--text-primary)]">GitHub</span>
                 </div>
               </StarButton>
 
@@ -211,13 +190,11 @@ export default function HomeSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-full h-12 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full h-full gap-2">
                   <Linkedin size={20} className="shrink-0 text-[var(--accent-primary)]" />
-                  <span className="max-w-0 group-hover:max-w-[100px] overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out pl-0 group-hover:pl-2 text-[var(--text-primary)]">
-                    LinkedIn
-                  </span>
+                  <span className="text-[var(--text-primary)]">LinkedIn</span>
                 </div>
               </StarButton>
             </motion.div>
@@ -260,16 +237,16 @@ export default function HomeSection() {
                 ))}
               </motion.ul>
 
-              <motion.p variants={fadeIn} className="text-[var(--text-secondary)] text-base leading-relaxed max-w-lg pt-2">
+              <motion.p variants={fadeIn} className="text-white/90 text-base leading-relaxed max-w-lg pt-2">
                 {PROFILE.summary}
               </motion.p>
 
-              {/* Stats Badges */}
+              {/* Stats Badges — with glow hover */}
               <motion.div variants={fadeIn} className="grid grid-cols-3 gap-2 pt-1">
                 {PROFILE.stats.map((stat, i) => (
                   <span
                     key={i}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 backdrop-blur-md text-[var(--text-secondary)] shadow-[0_0_12px_rgba(139,92,246,0.08)] hover:bg-white/10 hover:border-[var(--accent-primary)]/30 transition-all duration-300"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-white/10 bg-white/5 backdrop-blur-md text-[var(--text-secondary)] shadow-[0_0_12px_rgba(139,92,246,0.08)] hover:bg-white/10 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] transition-all duration-300 glow-shadow-hover"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)] opacity-80 shrink-0" />
                     {stat}
@@ -278,13 +255,14 @@ export default function HomeSection() {
               </motion.div>
             </div>
 
+            {/* Links — with micro-interaction lift */}
             <motion.div variants={fadeIn} className="pt-4 flex flex-wrap gap-4">
               <StarButton
                 href={PROFILE.resumeLink}
                 target="_blank"
                 download
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-12 h-12 hover:w-32 hover:-translate-y-0.5 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
                 <div className="flex items-center justify-center w-full h-full">
                   <Download size={20} className="shrink-0 text-[var(--accent-primary)]" />
@@ -299,7 +277,7 @@ export default function HomeSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-12 h-12 hover:w-32 hover:-translate-y-0.5 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
                 <div className="flex items-center justify-center w-full h-full">
                   <Github size={20} className="shrink-0 text-[var(--accent-primary)]" />
@@ -314,7 +292,7 @@ export default function HomeSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 lightColor="rgba(241,245,249,0.6)"
-                className="w-12 h-12 hover:w-32 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
+                className="w-12 h-12 hover:w-32 hover:-translate-y-0.5 transition-all duration-300 ease-out overflow-hidden px-0 group border-[var(--glass-border)] bg-[var(--glass-bg)]"
               >
                 <div className="flex items-center justify-center w-full h-full">
                   <Linkedin size={20} className="shrink-0 text-[var(--accent-primary)]" />

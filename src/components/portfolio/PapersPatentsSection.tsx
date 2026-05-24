@@ -30,7 +30,7 @@ function PatentBadge({ category }: { category: string }) {
 
 export default function PapersPatentsSection() {
   return (
-    <section id="papers-patents" className="relative min-h-screen bg-transparent py-24 px-4 md:px-8">
+    <section id="papers-patents" className="relative min-h-screen bg-transparent py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
 
         {/* Section Header */}
@@ -68,7 +68,7 @@ const GridItem = ({ item }: { item: any }) => {
 
   return (
     <li className="list-none min-h-[14rem]">
-      <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-[var(--glass-border)] p-2 md:rounded-[1.5rem] md:p-3 bg-[var(--glass-bg)]/30 backdrop-blur-md">
+      <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-[var(--glass-border)] p-2 md:rounded-[1.5rem] md:p-3 bg-[var(--glass-bg)]/30 backdrop-blur-md hover:-translate-y-1 transition-all duration-300">
         <GlowingEffect
           spread={40}
           glow={true}
@@ -102,4 +102,3 @@ const GridItem = ({ item }: { item: any }) => {
     </li>
   );
 };
-

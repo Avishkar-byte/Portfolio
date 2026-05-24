@@ -2,10 +2,12 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useRef, useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type WWavePathProps = React.ComponentProps<"div">;
 
 export function WavePath({ className, ...props }: WWavePathProps) {
+    const isMobile = useIsMobile();
     const path = useRef<SVGPathElement>(null);
     let progress = 0;
     let x = 0.5;
@@ -13,8 +15,10 @@ export function WavePath({ className, ...props }: WWavePathProps) {
     let reqId: number | null = null;
 
     useEffect(() => {
-        setPath(progress);
-    }, []);
+        if (!isMobile) {
+            setPath(progress);
+        }
+    }, [isMobile]);
 
     const setPath = (progress: number) => {
         const width = window.innerWidth * 0.7; // Width matches the container width in usage
@@ -67,6 +71,10 @@ export function WavePath({ className, ...props }: WWavePathProps) {
         progress = 0;
     };
 
+    if (isMobile) {
+        return null;
+    }
+
     return (
         <div className={cn("relative h-20 w-full max-w-7xl mx-auto", className)} {...props}>
             <div
@@ -76,10 +84,20 @@ export function WavePath({ className, ...props }: WWavePathProps) {
                 className="relative z-10 h-full w-full hover:cursor-crosshair"
             />
             <svg className="absolute top-0 h-full w-full pointer-events-none">
+                <defs>
+                    <filter id="wave-glow">
+                        <feGaussianBlur stdDeviation="2" result="blur" />
+                        <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
                 <path
                     ref={path}
                     className="fill-none stroke-[var(--accent-primary)]"
                     strokeWidth={1}
+                    filter="url(#wave-glow)"
                 />
             </svg>
         </div>

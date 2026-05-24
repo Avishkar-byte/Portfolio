@@ -1,14 +1,13 @@
+import { lazy, Suspense, useEffect } from "react";
 import PortfolioNav from "../components/portfolio/PortfolioNav";
 import HomeSection from "../components/portfolio/HomeSection";
-import ProjectsSection from "../components/portfolio/ProjectsSection";
-import PapersPatentsSection from "../components/portfolio/PapersPatentsSection";
-import JourneySection from "../components/portfolio/JourneySection";
 
-
-
-import { useEffect } from "react";
-import { WavePath } from "@/components/ui/wave-path";
-import { Footer } from "@/components/ui/footer-section";
+// Lazy load heavy sections
+const ProjectsSection = lazy(() => import("../components/portfolio/ProjectsSection"));
+const PapersPatentsSection = lazy(() => import("../components/portfolio/PapersPatentsSection"));
+const JourneySection = lazy(() => import("../components/portfolio/JourneySection"));
+const Footer = lazy(() => import("../components/ui/footer-section").then(m => ({ default: m.Footer })));
+const WavePath = lazy(() => import("../components/ui/wave-path").then(m => ({ default: m.WavePath })));
 
 const Index = () => {
   // Force scroll to top on page load/refresh
@@ -33,16 +32,26 @@ const Index = () => {
 
 
 
-        <ProjectsSection /> {/* Internally has snap points */}
-        <div className="snap-start"><PapersPatentsSection /></div>
-        <div className="snap-start"><JourneySection /></div>
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <ProjectsSection /> {/* Internally has snap points */}
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <div className="snap-start"><PapersPatentsSection /></div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <div className="snap-start"><JourneySection /></div>
+        </Suspense>
       </main>
 
       <div id="contact" className="snap-start relative">
-        <div className="absolute top-0 left-0 right-0 -mt-10 flex justify-center w-full z-20 overflow-hidden">
-          <WavePath className="w-[80vw] md:w-[60vw]" />
-        </div>
-        <Footer />
+        <Suspense fallback={<div className="h-20" />}>
+          <div className="absolute top-0 left-0 right-0 -mt-10 flex justify-center w-full z-20 overflow-hidden">
+            <WavePath className="w-[80vw] md:w-[60vw]" />
+          </div>
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px]" />}>
+          <Footer />
+        </Suspense>
       </div>
     </>
   );

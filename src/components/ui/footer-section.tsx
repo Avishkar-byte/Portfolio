@@ -21,10 +21,10 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 export function Footer() {
     return (
-        <footer className="md:rounded-t-3xl relative w-full max-w-7xl mx-auto flex flex-col items-center justify-center rounded-t-2xl border-t border-transparent px-6 py-12 lg:py-16 mt-20">
-            <div className="bg-[var(--accent-primary)]/20 absolute top-0 right-1/2 left-1/2 h-px w-1/3 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[2px]" />
+        <footer className="md:rounded-t-3xl relative w-full max-w-7xl mx-auto flex flex-col items-center justify-center rounded-t-2xl border-t border-transparent px-4 sm:px-6 lg:px-12 py-12 lg:py-16 mt-20" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+            <div className="bg-[var(--accent-primary)]/20 absolute top-0 right-1/2 left-1/2 h-px w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[4px]" />
 
-            <div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8">
+            <div className="grid w-full gap-8 xl:grid-cols-3 xl:gap-8 px-4 sm:px-6 lg:px-12">
                 <AnimatedContainer className="space-y-4">
                     <div className="flex items-center gap-2">
                         <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)] flex items-center justify-center text-black font-bold">

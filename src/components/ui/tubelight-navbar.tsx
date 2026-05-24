@@ -33,11 +33,12 @@ export function NavBar({ items, className }: NavBarProps) {
     return (
         <div
             className={cn(
-                "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 pb-6 sm:pb-0 sm:pt-6 overflow-visible",
+                "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 sm:pb-0 sm:pt-6 overflow-visible",
+                "pb-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))]",
                 className,
             )}
         >
-            <div className="flex items-center gap-2 sm:gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-3 bg-background/5 border border-border backdrop-blur-xl py-1 px-1 rounded-full shadow-lg">
                 {items.map((item) => {
                     const Icon = item.icon
                     const isActive = activeTab === item.name

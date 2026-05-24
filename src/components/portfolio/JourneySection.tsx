@@ -18,6 +18,8 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import { EXPERIENCES } from "@/data/experience";
 
@@ -42,43 +44,54 @@ import { ExperienceData } from "@/types";
 
 export default function JourneySection() {
   const [selectedExperience, setSelectedExperience] = React.useState<ExperienceData | null>(null);
+  const isMobile = useIsMobile();
 
   // Transform EXPERIENCES into TimelineEntry format
   const timelineData = EXPERIENCES.map((exp) => ({
     title: exp.title,
     content: (
-      <div className="relative group overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-sm p-8 transition-all duration-300 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_30px_-5px_var(--accent-glow)]">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className={cn(
+          "relative group overflow-hidden rounded-2xl border border-[var(--glass-border)] bg-[var(--glass-bg)] backdrop-blur-sm transition-all duration-300 hover:border-[var(--accent-primary)]/30 hover:shadow-[0_0_30px_-5px_var(--accent-glow)] shadow-[0_0_40px_rgba(99,102,241,0.05)]",
+          isMobile ? "p-5 w-full" : "p-8"
+        )}>
 
-        {/* Gradient Reveal */}
-        <div className="opacity-0 group-hover:opacity-100 transition duration-500 absolute inset-0 h-full w-full bg-gradient-to-br from-[var(--accent-primary)]/10 via-transparent to-transparent pointer-events-none" />
+          {/* Gradient Reveal — always subtly visible */}
+          <div className="transition duration-500 absolute inset-0 h-full w-full bg-gradient-to-br from-[var(--accent-primary)]/10 via-transparent to-transparent pointer-events-none opacity-80" />
 
-        <div className="relative z-10 flex flex-col gap-4">
-          <div className="flex items-center gap-3 text-[var(--accent-primary)]">
-            {ICON_MAP[exp.iconType]}
-            <span className="text-sm font-mono opacity-80">{exp.company}</span>
-          </div>
+          <div className="relative z-10 flex flex-col gap-4">
+            <div className="flex items-center gap-3 text-[var(--accent-primary)]">
+              {ICON_MAP[exp.iconType]}
+              <span className="text-sm font-mono opacity-80">{exp.company}</span>
+            </div>
 
-          <h4 className="text-2xl font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
-            {exp.role}
-          </h4>
+            <h4 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-[var(--accent-primary)] transition-colors">
+              {exp.role}
+            </h4>
 
-          <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg">
-            {exp.description}
-          </p>
+            <p className="text-[var(--text-secondary)] leading-relaxed max-w-lg">
+              {exp.description}
+            </p>
 
-          <div className="pt-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="bg-transparent border-[var(--glass-border)] text-[var(--text-secondary)] hover:bg-[var(--glass-bg)] hover:text-[var(--accent-primary)] transition-colors"
-              onClick={() => setSelectedExperience(exp)}
-            >
-              View Details
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
+            <div className="pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-[var(--glass-border)] text-[var(--text-secondary)] hover:bg-[var(--glass-bg)] hover:text-[var(--accent-primary)] hover:-translate-y-0.5 transition-all"
+                onClick={() => setSelectedExperience(exp)}
+              >
+                View Details
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     )
   }));
 

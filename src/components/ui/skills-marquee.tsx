@@ -7,6 +7,7 @@ import {
     Cable, Settings, Box, Zap, Layout, FileText, Scroll, Award, Users,
     Coffee, Palette
 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface Skill {
     name: string;
@@ -73,34 +74,53 @@ const SKILLS_ROW2: Skill[] = [
 // Utility to repeat items enough times
 const repeatedItems = (items: Skill[], repeat = 4) => Array.from({ length: repeat }).flatMap(() => items);
 
-const SkillItem = ({ skill }: { skill: Skill }) => {
+const SkillItem = ({ skill, isMobile }: { skill: Skill; isMobile: boolean }) => {
     const IconComponent = skill.icon;
 
     return (
         <div
-            className="group/skill relative flex items-center justify-center gap-3 p-4 rounded-3xl bg-white/5 border border-white/10 transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:border-white/20 cursor-default aspect-square w-20 hover:w-auto hover:aspect-auto hover:px-6"
+            className={
+                isMobile
+                    ? "group/skill relative flex items-center justify-center gap-3 p-3 rounded-3xl bg-white/5 border border-white/10 cursor-default aspect-square w-16"
+                    : "group/skill relative flex items-center justify-center gap-3 p-4 rounded-3xl bg-white/5 border border-white/10 transition-all duration-300 hover:scale-110 hover:bg-white/10 hover:border-white/20 cursor-default aspect-square w-20 hover:w-auto hover:aspect-auto hover:px-6"
+            }
         >
             {skill.slug ? (
                 <img
                     src={`https://cdn.simpleicons.org/${skill.slug}`}
                     alt={skill.name}
-                    className="w-10 h-10 transition-all duration-300 opacity-70 group-hover/skill:opacity-100 grayscale group-hover/skill:grayscale-0 invert dark:invert-0 shrink-0"
+                    className={
+                        isMobile
+                            ? "w-8 h-8 opacity-70 grayscale invert dark:invert-0 shrink-0"
+                            : "w-10 h-10 transition-all duration-300 opacity-70 group-hover/skill:opacity-100 grayscale group-hover/skill:grayscale-0 invert dark:invert-0 shrink-0"
+                    }
                 />
             ) : IconComponent ? (
                 <IconComponent
-                    className="w-10 h-10 transition-all duration-300 opacity-70 group-hover/skill:opacity-100 text-white group-hover/skill:text-[var(--hover-color)] shrink-0"
+                    className={
+                        isMobile
+                            ? "w-8 h-8 opacity-70 text-white shrink-0"
+                            : "w-10 h-10 transition-all duration-300 opacity-70 group-hover/skill:opacity-100 text-white group-hover/skill:text-[var(--hover-color)] shrink-0"
+                    }
                     style={{ '--hover-color': skill.color } as React.CSSProperties}
                 />
             ) : null}
 
-            <span className="hidden group-hover/skill:inline-block text-white/70 text-sm font-light transition-colors duration-300 group-hover/skill:text-white group-hover/skill:font-medium whitespace-nowrap">
-                {skill.name}
-            </span>
+            {/* Label hidden on mobile, visible on hover for desktop */}
+            {!isMobile && (
+                <span className="hidden group-hover/skill:inline-block text-white/70 text-sm font-light transition-colors duration-300 group-hover/skill:text-white group-hover/skill:font-medium whitespace-nowrap">
+                    {skill.name}
+                </span>
+            )}
         </div>
     );
 };
 
 export default function SkillsMarquee() {
+    const isMobile = useIsMobile();
+    const repeatCount = isMobile ? 2 : 4;
+    const mobileAnimStyle = isMobile ? { animationDuration: '110s' } : undefined;
+
     return (
         <section className="relative py-4 w-full overflow-hidden group">
 
@@ -115,16 +135,22 @@ export default function SkillsMarquee() {
                 {/* Carousel */}
                 <div className="overflow-hidden relative w-full py-4 space-y-4">
                     {/* Row 1 */}
-                    <div className="flex gap-4 whitespace-nowrap animate-scroll-left w-max group-hover:[animation-play-state:paused]">
-                        {repeatedItems(SKILLS_ROW1, 4).map((skill, i) => (
-                            <SkillItem key={`row1-${i}`} skill={skill} />
+                    <div
+                        className="flex gap-4 whitespace-nowrap animate-scroll-left w-max group-hover:[animation-play-state:paused]"
+                        style={mobileAnimStyle}
+                    >
+                        {repeatedItems(SKILLS_ROW1, repeatCount).map((skill, i) => (
+                            <SkillItem key={`row1-${i}`} skill={skill} isMobile={isMobile} />
                         ))}
                     </div>
 
                     {/* Row 2 */}
-                    <div className="flex gap-4 whitespace-nowrap animate-scroll-right w-max group-hover:[animation-play-state:paused]">
-                        {repeatedItems(SKILLS_ROW2, 4).map((skill, i) => (
-                            <SkillItem key={`row2-${i}`} skill={skill} />
+                    <div
+                        className="flex gap-4 whitespace-nowrap animate-scroll-right w-max group-hover:[animation-play-state:paused]"
+                        style={mobileAnimStyle}
+                    >
+                        {repeatedItems(SKILLS_ROW2, repeatCount).map((skill, i) => (
+                            <SkillItem key={`row2-${i}`} skill={skill} isMobile={isMobile} />
                         ))}
                     </div>
 

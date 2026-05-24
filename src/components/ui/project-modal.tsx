@@ -6,6 +6,7 @@ import { X, Github, ExternalLink, FileText, Youtube } from "lucide-react";
 import { ProjectData } from "@/types";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ProjectModalProps {
     project: ProjectData | null;
@@ -15,6 +16,7 @@ interface ProjectModalProps {
 
 export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    const isMobile = useIsMobile();
 
     // Reset slide index when modal opens
     React.useEffect(() => {
@@ -61,7 +63,16 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
                             transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-                            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[var(--card)] border border-[var(--glass-border)] shadow-2xl pointer-events-auto scrollbar-hide"
+                            className={cn(
+                                "relative max-h-[90dvh] overflow-y-auto rounded-2xl bg-[var(--card)] border border-[var(--glass-border)] shadow-2xl pointer-events-auto scrollbar-hide",
+                                isMobile
+                                    ? "w-[95vw] max-w-lg mx-auto"
+                                    : "w-full max-w-4xl"
+                            )}
+                            style={{
+                                overscrollBehavior: 'contain',
+                                WebkitOverflowScrolling: 'touch',
+                            }}
                         >
                             {/* Close Button */}
                             <button
@@ -73,7 +84,10 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 
                             <div className="flex flex-col md:flex-row">
                                 {/* Image Section - Slideshow */}
-                                <div className="w-full md:w-1/2 h-64 md:h-auto relative group">
+                                <div className={cn(
+                                    "w-full md:w-1/2 relative group",
+                                    isMobile ? "h-48" : "h-64 md:h-auto"
+                                )}>
                                     <AnimatePresence mode="wait">
                                         <motion.div
                                             key={currentImageIndex}
